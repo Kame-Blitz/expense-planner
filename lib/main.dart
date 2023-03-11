@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'transaction.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(const MyApp());
 
@@ -61,20 +62,38 @@ class HomeState extends State {
               child: Column(
                   children: transactions.map((tx) {
                 return Card(
-                    color: Colors.red,
                     child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.purple, width: 2)),
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        '₹ ${tx.amount}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.purple),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          child: Text('${tx.amount}'),
+                        Text(
+                          tx.transactionName,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                        Column(
-                          children: [
-                            Text(tx.transactionName),
-                            Text('${tx.dateCreated}')
-                          ],
+                        Text(
+                          DateFormat.yMMMd().format(tx.dateCreated),
+                          style: const TextStyle(color: Colors.grey),
                         )
                       ],
-                    ));
+                    )
+                  ],
+                ));
               }).toList()))
         ],
       ),
