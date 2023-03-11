@@ -27,16 +27,16 @@ class Home extends StatefulWidget {
 class HomeState extends State {
   final List<Transaction> transactions = [
     Transaction(
-        id: '1',
         amount: 0,
         dateCreated: DateTime.now(),
         transactionName: 'Transaction 1'),
     Transaction(
-        id: '2',
         amount: 0,
         dateCreated: DateTime.now(),
         transactionName: 'Transaction 2')
   ];
+  final transactionNameController = TextEditingController();
+  final transactionAmountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,6 @@ class HomeState extends State {
         title: const Text('Expense Tracker'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
@@ -53,10 +52,50 @@ class HomeState extends State {
               child: const Card(
                 color: Colors.blue,
                 child: Text(
-                  'hi',
+                  'chart',
                   textAlign: TextAlign.center,
                 ),
               )),
+          Card(
+            elevation: 5,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextField(
+                    decoration:
+                        const InputDecoration(labelText: 'Transaction Name'),
+                    controller: transactionNameController,
+                  ),
+                  TextField(
+                    decoration: const InputDecoration(labelText: 'Amount'),
+                    controller: transactionAmountController,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        setState(() {
+                          transactions.add(Transaction(
+                              transactionName: transactionNameController.text,
+                              amount: double.parse(
+                                  transactionAmountController.text),
+                              dateCreated: DateTime.now()));
+                        });
+                      },
+                      style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Colors.purple)),
+                      child: const Text(
+                        'Add transaction',
+                        style: TextStyle(color: Colors.purple),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
           Container(
               width: double.infinity,
               child: Column(
