@@ -10,20 +10,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Expense Tracker',
-      home: Homea(),
+      home: Home(),
     );
   }
 }
 
-class Homea extends StatefulWidget {
-  const Homea();
+class Home extends StatefulWidget {
+  const Home({super.key});
   @override
   State<StatefulWidget> createState() {
-    return Home();
+    return HomeState();
   }
 }
 
-class Home extends State {
+class HomeState extends State {
   final List<Transaction> transactions = [
     Transaction(
         id: '1',
@@ -60,7 +60,21 @@ class Home extends State {
               width: double.infinity,
               child: Column(
                   children: transactions.map((tx) {
-                return Card(color: Colors.red, child: Text(tx.transactionName));
+                return Card(
+                    color: Colors.red,
+                    child: Row(
+                      children: [
+                        Container(
+                          child: Text('${tx.amount}'),
+                        ),
+                        Column(
+                          children: [
+                            Text(tx.transactionName),
+                            Text('${tx.dateCreated}')
+                          ],
+                        )
+                      ],
+                    ));
               }).toList()))
         ],
       ),
