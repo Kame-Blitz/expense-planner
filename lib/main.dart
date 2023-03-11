@@ -23,20 +23,24 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Expense Tracker'),
       ),
-      body: Column(children: <Widget>[
-        Container(
-            width: double.infinity,
-            child: const Card(
-              color: Colors.blue,
-              elevation: 5,
-              child: Text(
-                'chart',
-              ),
-            )),
-        const Card(
-          child: Text('list of tx'),
-        )
-      ]),
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+                width: double.infinity,
+                child: const Card(
+                  color: Colors.blue,
+                  elevation: 5,
+                  child: Text(
+                    'chart',
+                  ),
+                )),
+            const Card(
+              color: Colors.red,
+              child: Text('list of tx'),
+            )
+          ]),
     );
   }
 }
