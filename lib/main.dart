@@ -23,9 +23,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: Text('Expense Tracker'),
       ),
-      body: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: Column(
         children: [
           Container(
               width: double.infinity,
@@ -38,7 +36,7 @@ class Home extends StatelessWidget {
               )),
           UserTransactions(),
         ],
-      )),
+      ),
     );
   }
 }
