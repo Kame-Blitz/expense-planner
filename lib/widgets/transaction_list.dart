@@ -8,7 +8,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 300,
+        height: 400,
         child: ListView(
             children: transactions.map((tx) {
           return Card(
@@ -21,7 +21,7 @@ class TransactionList extends StatelessWidget {
                     border: Border.all(color: Colors.purple, width: 2)),
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  '₹ ${tx.amount}',
+                  '₹ ${tx.amount.toStringAsFixed(2)}',
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,

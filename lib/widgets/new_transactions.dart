@@ -7,6 +7,16 @@ class NewTransaction extends StatelessWidget {
   final transactionNameController = TextEditingController();
   final transactionAmountController = TextEditingController();
 
+  void submitData() {
+    if (transactionNameController.text.isEmpty ||
+        double.parse(transactionAmountController.text) <= 0) {
+      return;
+    } else {
+      func!(transactionNameController.text,
+          double.parse(transactionAmountController.text));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,20 +27,25 @@ class NewTransaction extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextField(
+              keyboardType: TextInputType.name,
               decoration: const InputDecoration(labelText: 'Transaction Name'),
               controller: transactionNameController,
+              onSubmitted: (_value) {
+                submitData();
+              },
             ),
             TextField(
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(labelText: 'Amount'),
               controller: transactionAmountController,
+              onSubmitted: (_value) {
+                submitData();
+              },
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: OutlinedButton(
-                onPressed: () {
-                  func!(transactionNameController.text,
-                      double.parse(transactionAmountController.text));
-                },
+                onPressed: submitData,
                 style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: Colors.purple)),
                 child: const Text(
