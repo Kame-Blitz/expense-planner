@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'user_transactions.dart';
 
-class NewTransaction extends StatelessWidget {
-  final Function? func;
-  NewTransaction({this.func});
+class NewTransaction extends StatefulWidget {
+  final Function func;
+  NewTransaction({required this.func});
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
   final transactionNameController = TextEditingController();
+
   final transactionAmountController = TextEditingController();
 
   void submitData() {
@@ -12,13 +18,15 @@ class NewTransaction extends StatelessWidget {
         double.parse(transactionAmountController.text) <= 0) {
       return;
     } else {
-      func!(transactionNameController.text,
+      widget.func(transactionNameController.text,
           double.parse(transactionAmountController.text));
     }
+    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return Card(
       elevation: 5,
       child: Container(

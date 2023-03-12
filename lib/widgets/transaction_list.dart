@@ -8,7 +8,8 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 400,
+       
+        height: MediaQuery.of(context).size.height - 81,
         child: ListView(
             children: transactions.map((tx) {
           return Card(
