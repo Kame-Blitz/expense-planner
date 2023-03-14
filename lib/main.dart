@@ -12,6 +12,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Expense Tracker',
+      theme: ThemeData(
+          primarySwatch: Colors.purple,
+          fontFamily: 'OpenSans',
+          textTheme: ThemeData.light()
+              .textTheme
+              .copyWith(headline6: TextStyle(fontSize: 16)),
+          appBarTheme: ThemeData.light().appBarTheme.copyWith(
+              textTheme: ThemeData.light()
+                  .textTheme
+                  .copyWith(headline6: TextStyle(fontSize: 20)))),
       home: Home(),
       debugShowCheckedModeBanner: false,
     );
@@ -24,16 +34,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<Transaction> _transactions = [
-    Transaction(
-        amount: 0,
-        dateCreated: DateTime.now(),
-        transactionName: 'Transaction 1'),
-    Transaction(
-        amount: 0,
-        dateCreated: DateTime.now(),
-        transactionName: 'Transaction 2')
-  ];
+  final List<Transaction> _transactions = [];
 
   void _addNew(String transactionName, double amount) {
     final newTx = Transaction(
@@ -60,7 +61,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expense Tracker'),
+        title: Text(
+          'Expense Tracker',
+        ),
         actions: [
           IconButton(
               onPressed: () => _startAddNewTransaction(context),
