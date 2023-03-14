@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:no3/widgets/chart.dart';
 import 'package:no3/widgets/new_transactions.dart';
 import 'package:no3/widgets/transaction_list.dart';
 import 'models/transaction.dart';
@@ -36,13 +37,27 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final List<Transaction> _transactions = [];
 
-  void _addNew(String transactionName, double amount) {
+  List<Transaction> get _recenttransactions {
+    return _transactions.where((tx) {
+      return tx.dateCreated.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
+  void _addNew(String transactionName, double amount, DateTime chosenDate) {
     final newTx = Transaction(
         transactionName: transactionName,
         amount: amount,
-        dateCreated: DateTime.now());
+        dateCreated: chosenDate);
     setState(() {
       _transactions.add(newTx);
+    });
+  }
+
+  void deleteTransaction(DateTime id) {
+    setState(() {
+      _transactions.removeWhere((tx) {
+        return tx.id == id;
+      });
     });
   }
 
@@ -72,16 +87,8 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
-          Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text(
-                  'chart',
-                  textAlign: TextAlign.center,
-                ),
-              )),
-          TransactionList(_transactions),
+          Chart(_recenttransactions),
+          Expanded(child: TransactionList(_transactions, deleteTransaction)),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

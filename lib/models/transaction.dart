@@ -1,5 +1,5 @@
 class Transaction {
-  int id = 0;
+  DateTime id = DateTime.now();
   final String transactionName;
   final double amount;
   final DateTime dateCreated;
@@ -8,6 +8,6 @@ class Transaction {
       {required this.transactionName,
       required this.amount,
       required this.dateCreated}) {
-    id += 1;
+    id = DateTime.now();
   }
 }

@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-  TransactionList(this.transactions);
+  final Function deltx;
+  TransactionList(this.transactions, this.deltx);
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height - 83,
         child: transactions.isEmpty
             ? Column(
                 children: [
@@ -32,6 +32,7 @@ class TransactionList extends StatelessWidget {
                 children: transactions.map((tx) {
                 return Card(
                     child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
                       margin: const EdgeInsets.symmetric(
@@ -59,7 +60,15 @@ class TransactionList extends StatelessWidget {
                           style: const TextStyle(color: Colors.grey),
                         )
                       ],
-                    )
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        print(tx.id);
+                        deltx(tx.id);
+                      },
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ],
                 ));
               }).toList()));

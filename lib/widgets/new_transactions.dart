@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function func;
@@ -15,18 +16,36 @@ class _NewTransactionState extends State<NewTransaction> {
 
   void submitData() {
     if (transactionNameController.text.isEmpty ||
-        double.parse(transactionAmountController.text) <= 0) {
+        double.parse(transactionAmountController.text) <= 0 || selectedDate == null) {
       return;
     } else {
       widget.func(transactionNameController.text,
-          double.parse(transactionAmountController.text));
+          double.parse(transactionAmountController.text), selectedDate);
     }
     Navigator.of(context).pop();
   }
 
+  DateTime selectedDate = DateTime.now();
+
+  void _datepicker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2023),
+            lastDate: DateTime.now())
+        .then((index) {
+      if (index == null) {
+        return;
+      } else {
+        setState(() {
+          selectedDate = index;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    
     return Card(
       elevation: 5,
       child: Container(
@@ -49,6 +68,23 @@ class _NewTransactionState extends State<NewTransaction> {
               onSubmitted: (_value) {
                 submitData();
               },
+            ),
+            Row(
+              children: [
+                Text(selectedDate == DateTime.now()
+                    ? 'No date chosen'
+                    : DateFormat.yMd().format(selectedDate)),
+                TextButton(
+                    onPressed: () {
+                      _datepicker();
+                    },
+                    child: Text(
+                      'Choose Date',
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold),
+                    ))
+              ],
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
